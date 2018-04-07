@@ -28,26 +28,28 @@ public class DeleteStudentDemo {
 			System.out.println("\nGetting student with id: " + studentId);
 
 			Student myStudent = session.get(Student.class, studentId);
-
-			System.out.println("Updating student...");
-
-			myStudent.setFirstName("Emil");
-
+			
+			// delete student
+			System.out.println("Deleting student: " + myStudent);
+			if(myStudent!=null) {
+				session.delete(myStudent);
+			} else {
+				System.out.println("Student not found in database. Can not be deleted.");
+			}
+						
+			// delete student id=2 - another way
+			System.out.println("Deleting student id=2");
+			int result = session.createQuery("delete Student where id=2").executeUpdate();			
+			System.out.println("Rows affected " + result);
+			
+			
+			result = session.createQuery("delete from Student").executeUpdate();
+			System.out.println("Rows affected (delete all) " + result);
+			
 			// commit the transaction
 			session.getTransaction().commit();
 
-			// NEW CODE
-			session = factory.getCurrentSession();
-			session.beginTransaction();
 			
-			// update email for all students
-			System.out.println("Update email for all students");
-			
-			session.createQuery("update Student set email='foo@gmail.com'").executeUpdate();
-
-			// commit the transaction
-			session.getTransaction().commit();
-
 			System.out.println("Done!");
 
 		} finally {

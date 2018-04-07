@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 import com.luv2code.hibernate.demo.entity.Student;
 
 public class QueryStudentDemo {
-
+	
 	public static void main(String[] args) {
 
 		// create session factory
@@ -23,8 +23,8 @@ public class QueryStudentDemo {
 			// start a transaction
 			session.beginTransaction();
 
-			// query students
-			List<Student> theStudents = session.createQuery("from Student").getResultList();
+			// query students			
+			List<Student> theStudents = (List<Student>)session.createQuery("from Student").getResultList();
 
 			// display the students
 			displayStudents(theStudents);
